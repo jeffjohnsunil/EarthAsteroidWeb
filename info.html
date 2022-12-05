@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Earth Asteroid Web</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        
+        <script src=
+        "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+          <script
+            src=
+        "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+            type="text/javascript"
+          ></script>
+          <script src=
+        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+          <script src=
+        "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <style>
+        body {
+            font-family: "Verdana";
+        }
+
+        .tag {
+            opacity: 0;
+            transform: translate(0, 10vh);
+            transition: all 1s;
+        }
+
+        .tag.visible {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        .parallax {
+            background-image: url("https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg");
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .earth * {
+            transition: all 4s cubic-bezier(0,1.5,.3,1);
+        }
+
+        .earth img {
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+        }
+
+        .earth .more-info {
+            background-image: linear-gradient(to bottom, rgba(10,10,10,1), black);
+            text-align: left;
+            border-radius: 1em;
+            position: absolute;
+            left: 45%;
+            color: #fff;
+            opacity: 0;
+            padding: 1em;
+            transform-origin: 0 0;
+            transform: scale(.8);
+            width: 30%;
+        }
+
+        .earth .more-info h1 {
+            margin: 0 0 1em;
+            text-align: right;
+        }
+
+        .earth:hover img { transform: translateX(-75px) translateY(-75px) scale(.5); }
+        .earth:hover .more-info { opacity: 1; transform: none; }
+
+        .info {
+            position: absolute; 
+            background-color: white; 
+            margin-top: 50px; 
+            margin-left: 50px; 
+            padding: 5px;
+        }
+
+        @media (max-width: 800px) {
+            .earth img {
+                height: 200px;
+                width: 200px;
+                border-radius: 50%;
+            }
+            
+            .earth .more-info {
+                background-image: linear-gradient(to bottom, rgba(10,10,10,1), black);
+                text-align: left;
+                border-radius: 1em;
+                position: absolute;
+                left: 12%;
+                color: #fff;
+                opacity: 0;
+                padding: 1em;
+                transform-origin: 0 0;
+                transform: scale(.8);
+                width: 75%;
+            }
+
+            .info {
+                visibility: hidden;
+                background-color: white; 
+                padding: 5px;
+            }
+        }
+
+        .fix{
+            position:fixed;
+            bottom: 0px;
+            left: 42%;
+            height: 200px;
+        }
+
+        .invisible {
+            visibility: hidden;
+            height: 0px;
+        }
+    </style></head>
+    <body class="text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+            <a class="navbar-brand" href="#">Earth Asteroid Web</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="index.html">Home</a>
+                    <a class="nav-item nav-link active" href="info.html">Info <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="#">Classes</a>
+                    <a class="nav-item nav-link" href="simulation.html">Simulation</a>
+                    <a class="nav-item nav-link" href="#">Calculator</a>
+                </div>
+            </div>
+        </nav>
+        <div class="p-5 flex-column", style="background-image: url('https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg'); height: 100%">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">How are asteroids classified?</h1>
+                    <p class="lead">Get ready. It's time to science.</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col align-self-center">
+                    <h1>Important key terms</h1>
+                    <p>Before we get into the nitty-gritty details of classifications, we need to define some important key terms. These will 
+                        come in handy soon.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col align-self-start" style="text-align: left;">
+                    <ul>
+                        <li><b>Aphelion:</b> The point of orbit at which an asteroid is furthest from the Earth.</li>
+                        <li><b>Perihelion:</b> The point of orbit at which an asteroid is closest to the Earth.</li>
+                        <li><b>Semi-major axis:</b> The length of the longest radius of an ellipse, that is the greatest 
+                            distance between the centre of the ellipse and the perimeter of the ellipse.</li>
+                        <li><b>Astronomical Unit (au):</b> A unit of length, roughly the distance from Earth to the Sun and 
+                            equal to about 150 million kilometres</li>
+                    </ul>
+                </div>
+            </div>
+        </div><br><br>
+        <div class='tag info'>
+            <p>Click on each asteroid to learn more!</p>
+        </div>
+        <div class="earth" style="background-color: #000">
+            <br><div class="more-info">
+                <h1>Amors</h1>
+                <ul>
+                  <li>Orbits are larger than Earth's but smaller than Mars's.</li>
+                  <li>The semi-major axis is greater than 1 au.</li>
+                  <li>The perihelion is between 1.017 au and 1.3 au.</li>
+                </ul>
+            </div>
+            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
+        </div>
+        <div class="earth" style="background-color: #000">
+            <br><div class="more-info">
+                <h1>Apollos</h1>
+                <ul>
+                  <li>Orbits cross the Earth's but the semi-major axes are bigger.</li>
+                  <li>The semi-major axis is greater than 1 au.</li>
+                  <li>The perihelion is less than 1.017 au.</li>
+                </ul>
+            </div>
+            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
+        </div>
+        <div class="earth" style="background-color: #000">
+            <br><div class="more-info">
+                <h1>Atens</h1>
+                <ul>
+                  <li>Orbits cross the Earth's but the semi-major axes are smaller.</li>
+                  <li>The semi-major axis is less than 1 au.</li>
+                  <li>The aphelion is greater than 0.983 au.</li>
+                </ul>
+            </div>
+            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
+        </div>
+        <div class="earth" style="background-color: #000">
+            <br><div class="more-info">
+                <h1>Atiras</h1>
+                <ul>
+                  <li>Orbits are entirely contained in the Earth's.</li>
+                  <li>The semi-major axis is less than 1 au.</li>
+                  <li>The aphelion is less than 0.983 au.</li>
+                </ul>
+            </div>
+            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
+        </div><br><br>
+        <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"  class='invisible' id="frozen-asteroid">
+        <br class="location added"><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="container-fluid text-center text-md-left">
+                <div class="row">
+                    <div class="col-md-6 mt-md-0 mt-3">
+                        <h5 class="text-uppercase">Citations and Sources</h5>
+                        <p>Remember: this content wasn't taken of the top of someone's head. It is the result of the hardwork put
+                            into a documentation by NASA and other space agencies. Here are the links to the other sources that were
+                            used as data.
+                        </p>
+                    </div>
+                    <div class="col-md-3 mb-md-0 mb-3">
+                        <h5 class="text-uppercase">Links</h5>
+                        <ul class="list-unstyled text-small">
+                            <li><a href="https://www.nasa.gov/mission_pages/station/news/orbital_debris.html" target="_blank" class="text-muted">NASA</a></li>
+                            <li><a href="https://www.statista.com/chart/24980/space-debris-in-orbit/" target="_blank" class="text-muted">Statista</a></li>
+                            <li><a href="https://www.space-track.org/documentation" target="_blank" class="text-muted">USSpaceCom</a></li>
+                            <li><a href="http://astria.tacc.utexas.edu/AstriaGraph/" target="_blank" class="text-muted">Astria Graph</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright text-center py-3" style="background-color: rgb(192, 192, 192);">Created by Jeff John Sunil</div>
+        </footer>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.1/dist/Chart.min.js"></script>
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+    <script>
+        $(document).on("scroll", function() {
+            var pageTop = $(document).scrollTop();
+            var pageBottom = pageTop + $(window).height();
+            var tags = $(".tag");
+
+            for (var i = 0; i < tags.length; i++) {
+                var tag = tags[i];
+
+                if ($(tag).position().top < pageBottom) {
+                $(tag).addClass("visible");
+                } else {
+                $(tag).removeClass("visible");
+                }
+            }
+        });
+        window.onscroll = function() {
+            console.log(window.pageYOffset);
+            var asteroid = document.getElementById('frozen-asteroid');
+            var location = document.getElementsByClassName('location');
+            console.log(location.top)
+            if ( window.pageYOffset > 1500 & window.pageYOffset < 2000) {
+                asteroid.classList.add("fix");
+                asteroid.classList.remove("invisible");
+            } else {
+                asteroid.classList.remove("fix");
+                asteroid.classList.add("invisible");
+            }
+        }
+
+    </script>
+</html>
