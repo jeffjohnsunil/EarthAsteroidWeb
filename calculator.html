@@ -45,6 +45,10 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
+
+        .slider {
+            width: 50%; /* Full-width */
+        }
     </style></head>
     <body class="text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -65,79 +69,43 @@
         <div class="p-5 flex-column", style="background-image: url('https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg'); height: 100%">
             <div class="jumbotron jumbotron-fluid">
                 <div class="container">
-                    <h1 class="display-4">Asteroid Calculator</h1>
+                    <h1 class="display-5">Asteroid Calculator</h1>
                     <p class="lead">Classify any asteroid using given parameters, or see when an asteroid will collide with the Earth!</p>
                 </div>
             </div>
         </div>
         <br>
-        <div class="shadow container">
-            <div class="row">
-                <div class="col align-self-center">
-                    <h1>What do you mean?</h1>
-                    <p>Surrounding the Earth, there exists a large group of asteroids that orbit the Earth... very closely. Some of these
-                        are made of rocks, but the truth is, most of them are man-made, or more specifically, the waste that rockets dispose of when 
-                        they exit the atmosphere of the Earth. As of November 4, 2021, 27,323 near-Earth asteroids are known, 2,224 of which are 
-                        both sufficiently large and come sufficiently close to Earth to be considered potentially hazardous, and these asteroids 
-                        will last for millions of years.
-                    </p>
-                </div>
+        <form action="results.php" method="get" id="impactCalculatorForm">
+            <div id="diameter">
+                <label>Asteroid Diameter</label>
+                <input name="inputDiameter" id="inputDiameter" type="range" min="1" max="1000000" value="500000" class="slider" onInput = "valueReflector(this.value, 'input', 'Diameter', 1000000, 1)" onchange="valueReflector(this.value, 'input', 'Diameter', 1000000, 1)">
+                Value: <input style = 'width: 100px' id="outputDiameter" type="number" placeholder="number" value = "500000" onInput = "valueReflector(this.value, 'output', 'Diameter', 1000000, 1)" onchange="valueReflector(this.value, 'output', 'Diameter', 1000000, 1)">
+                <select name="diameterUnit" class="diameterUnit">
+                    <option value="kilometers">kilometers</option>
+                    <option value="yards">yards</option>
+                    <option value="miles">miles</option>
+                </select>
             </div>
-        </div><br><br>
-        
-        <div class="tag container">
-            <div class="row">
-                <div class="col-lg-4 align-self-center">
-                    <h1>Orbital Periods</h1>
-                    <p>These asteroids can take centuries to orbit depending on the height of orbit. Others will fall back to Earth within
-                        several years. Some are in between and just float around.
-                    </p>
-                </div>
-                <div class="col-lg-4 align-self-center">
-                    <h1>Orbital Speeds</h1>
-                    <p>They travel at speeds up to 17,500 mph, fast enough for a relatively small piece of orbital debris to damage a 
-                        satellite or a spacecraft. here are approximately 100 million pieces of debris about .04 inches (or one millimeter) 
-                        and larger.
-                    </p>
-                </div>
-                <div class="col-lg-4 align-self-center">
-                    <h1>Tracking Debris</h1>
-                    <p>The Department of Defense and NASA maintains a highly accurate satellite catalog on objects in Earth orbit. Most of 
-                        the cataloged objects are larger than a softball (approximately 10 centimeters).
-                    </p>
-                </div>
-            </div><br>
-            <canvas class="my-4 w-100 tag" id="lineChart"></canvas><br>
-            <div class="tag row align-items-center">
-                <div class="col-lg">
-                    <h1>Facts and Figures</h1>
-                    <p>The amount of debris that orbits the Earth has been increasing exponentially since the first space debris was discovered
-                        in 1959. Also, a lot of this debris isn't even functional spacecraft - it's mainly the parts that rockets dispatch and 
-                        excess rocket fuel. Learn more by navigating to the Info page. Note that the above stats are only estimates.
-                    </p>
-                </div>
+            <div id="density">
+                <label>Asteroid Density</label>
+                <input name="inputDensity" id="inputDensity" type="range" min="1" max="10000" value="5000" class="slider" onInput = "valueReflector(this.value, 'input', 'Density', 10000, 1)" onchange="valueReflector(this.value, 'input', 'Density', 10000, 1)">
+                Value: <input style = 'width: 100px' id="outputDensity" type="number" placeholder="number" value = "5000" onInput = "valueReflector(this.value, 'output', 'Density', 10000, 1)" onchange="valueReflector(this.value, 'output', 'Density', 10000, 1)">
+                kg/m<sup>3</sup>
             </div>
-        </div><br>
-        <div class="parallax"><br>
-            <div class="container">
-                <div class="tag row">
-                    <div class="col-lg-4 align-self-start" style="background-color: white;">
-                        <h1>Which ones are the threats?</h1>
-                        <p>Any asteroid that has a diameter approximately 35 meters across can pose major threats to an area, but any
-                            object larger than a millimeter in diameter would be enough to kill someone.
-                        </p>
-                    </div>
-                </div><br><br>
-                <div class="tag row justify-content-end">
-                    <div class="col-lg-4 align-self-end" style="background-color: white;">
-                        <h1>How are they classified as being near the Earth?</h1>
-                        <p>The technical truth is that any Near Earth Object should have a trajectory that brings it to within approximately
-                            45 million kilometers of the Earth's orbit.
-                        </p>
-                    </div>
-                </div><br><br>
+            <div id="velocity">
+                <label>Impact Velocity</label>
+                <input name="inputVelocity" id="inputVelocity" type="range" min="11" max="72" value="50" class="slider" onInput = "valueReflector(this.value, 'input', 'Velocity', 72, 11)" onchange="valueReflector(this.value, 'input', 'Velocity', 72, 11)">
+                Value: <input style = 'width: 100px' id="outputVelocity" type="number" placeholder="number" value = "50" onInput = "valueReflector(this.value, 'output', 'Velocity', 72, 11)" onchange="valueReflector(this.value, 'output', 'Velocity', 72, 11)">
+                km/s.
             </div>
-        </div>
+            <p style="width: 50%; margin-left: 25%;">
+                This is the velocity of the projectile before it enters the atmosphere. The minimum impact velocity on Earth is 11 km/s. 
+                Typical impact velocities are 17 km/s for asteroids and 51 km/s for comets. The maximum Earth impact velocity for objects 
+                orbiting the sun is 72 km/s.
+            </p>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="results"></p>
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="container-fluid text-center text-md-left">
                 <div class="row">
@@ -168,45 +136,40 @@
       feather.replace()
     </script>
     <script>
-        data1 = [0, 200, 700, 1750, 2500, 3000, 7000];
-        data2 = [0, 1500, 4000, 6000, 9500, 16000, 23500];
-        for (var x = 0; x < data1.length; x++) {
-            data2[x] -= data1[x]
-        }
-        var ctx = document.getElementById("lineChart").getContext('2d');
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["1960", "1970", "1980", "1990", "2000", "2010", "2020"],
-                datasets: [
-                    {
-                        label: "Payload Objects (Spaceships and Satellites)",
-                        data: data1,
-                        backgroundColor: [
-                            'rgba(105, 0, 132, .2)',
-                        ],
-                        borderColor: [
-                            'rgba(200, 99, 132, .7)',
-                        ],
-                        borderWidth: 2
-                    },
-                    {
-                        label: "Other Objects (Space Debris)",
-                        data: data2,
-                        backgroundColor: [
-                            'rgba(0, 137, 132, .2)',
-                        ],
-                        borderColor: [
-                            'rgba(0, 10, 130, .7)',
-                        ],
-                        borderWidth: 2
-                    }
-                ]
-            },
-            options: {
-                responsive: true
+        function valueReflector(valNum, inputOutput, valType, max, min) {
+            if (valNum > max) {
+                valNum = max
+            } else if (valNum < min) {
+                valNum = min
             }
-        });
+            if (inputOutput == 'input') {
+                document.getElementById("output" + valType).value = valNum;
+            } else {
+                document.getElementById("input" + valType).value = valNum;
+            }
+            document.getElementById(inputOutput + valType).value = valNum;
+        }
+
+        function impactCalculator() {
+            const form = document.getElementById('impactCalculatorForm');
+            diameter = form.elements[0].value
+            diameterUnits = form.elements[2].value
+            switch(diameterUnits) {
+                case 'kilometers':
+                    diameter *= 1000;
+                    break;
+                case 'miles':
+                    diameter *= 1609.34;
+                    break;
+                case 'yards':
+                    diameter *= 0.9144;
+                    break;
+            }
+            density = form.elements[3].value
+            velocity = form.elements[5].value
+            results = document.getElementById('results')
+            results.innerHTML = density
+        }
     </script>
     <script>
         $(document).on("scroll", function() {
@@ -218,9 +181,9 @@
                 var tag = tags[i];
 
                 if ($(tag).position().top < pageBottom) {
-                $(tag).addClass("visible");
+                    $(tag).addClass("visible");
                 } else {
-                $(tag).removeClass("visible");
+                    $(tag).removeClass("visible");
                 }
             }
         });
