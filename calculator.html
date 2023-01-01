@@ -49,86 +49,135 @@
         .slider {
             width: 50%; /* Full-width */
         }
+
+        #results {
+            display: none;
+        }
+        #loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 500px;
+            height: 500px;
+            margin: -250px 0 0 -250px;
+        }
     </style></head>
     <body class="text-center">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-            <a class="navbar-brand" href="#">Earth Asteroid Web</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="info.html">Info</a>
-                    <a class="nav-item nav-link" href="#">Classes</a>
-                    <a class="nav-item nav-link" href="simulation.html">Simulation</a>
-                    <a class="nav-item nav-link" href="#">Calculator</a>
+        <div id="loader" style="display:none;"><img src="loadingCalculator.gif" style="height: 500px"></div>
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+                <a class="navbar-brand" href="#">Earth Asteroid Web</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="info.html">Info</a>
+                        <a class="nav-item nav-link" href="#">Classes</a>
+                        <a class="nav-item nav-link" href="simulation.html">Simulation</a>
+                        <a class="nav-item nav-link active" href="calculator.html">Calculator</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="p-5 flex-column", style="background-image: url('https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg'); height: 100%">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-5">Asteroid Calculator</h1>
+                        <p class="lead">Classify any asteroid using given parameters, or see when an asteroid will collide with the Earth!</p>
+                    </div>
                 </div>
             </div>
-        </nav>
-        <div class="p-5 flex-column", style="background-image: url('https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg'); height: 100%">
-            <div class="jumbotron jumbotron-fluid">
-                <div class="container">
-                    <h1 class="display-5">Asteroid Calculator</h1>
-                    <p class="lead">Classify any asteroid using given parameters, or see when an asteroid will collide with the Earth!</p>
+            <br>
+            <form action="" method="post" id="impactCalculatorForm">
+                <div id="diameter">
+                    <label>Asteroid Diameter</label>
+                    <input style = 'width: 100px' id="outputDiameter" type="number" placeholder="number" value = "1" min="1" max="1000000" onInput = "valueReflector(this.value, 'output', 'Diameter', 1000000, 1)" onchange="valueReflector(this.value, 'output', 'Diameter', 1000000, 1)">
+                    <select name="diameterUnit" class="diameterUnit">
+                        <option value="meters">meters</option>
+                        <option value="kilometers">kilometers</option>
+                        <option value="miles">miles</option>
+                    </select>
+                    <input name="inputDiameter" id="inputDiameter" type="range" min="1" max="1000000" value="1" class="slider" onInput = "valueReflector(this.value, 'input', 'Diameter', 1000000, 1)" onchange="valueReflector(this.value, 'input', 'Diameter', 1000000, 1)">
+                </div>
+                <div id="density">
+                    <label>Asteroid Density</label>
+                    <input style = 'width: 100px' id="outputDensity" type="number" placeholder="number" value = "1000" min="1000" max="10000" onInput = "valueReflector(this.value, 'output', 'Density', 10000, 1)" onchange="valueReflector(this.value, 'output', 'Density', 10000, 1)">
+                    kg/m<sup>3</sup>
+                    <input name="inputDensity" id="inputDensity" type="range" min="1000" max="10000" value="1000" class="slider" onInput = "valueReflector(this.value, 'input', 'Density', 10000, 1)" onchange="valueReflector(this.value, 'input', 'Density', 10000, 1)">
+                </div>
+                <div id="velocity">
+                    <label>Impact Velocity</label>
+                    <input style = 'width: 100px' id="outputVelocity" type="number" placeholder="number" value = "11" min="11" max="72" onInput = "valueReflector(this.value, 'output', 'Velocity', 72, 11)" onchange="valueReflector(this.value, 'output', 'Velocity', 72, 11)">
+                    km/s.
+                    <input name="inputVelocity" id="inputVelocity" type="range" min="11" max="72" value="11" class="slider" onInput = "valueReflector(this.value, 'input', 'Velocity', 72, 11)" onchange="valueReflector(this.value, 'input', 'Velocity', 72, 11)">
+                </div>
+                <p style="width: 50%; margin-left: 25%;">
+                    This is the velocity of the projectile before it enters the atmosphere. The minimum impact velocity on Earth is 11 km/s. 
+                    Typical impact velocities are 17 km/s for asteroids and 51 km/s for comets. The maximum Earth impact velocity for objects 
+                    orbiting the sun is 72 km/s.
+                </p>
+                <button type="button" onclick="impactCalculator()">Submit</button>
+            </form>
+            <div id="results">
+                <br>
+                <div class="row" style="width: 100%">
+                    <div class="col-sm-6">
+                        <div class="card text-white bg-success" style="margin: 10px">
+                            <div class="card-header">Asteroid Energy</div>
+                            <div class="card-body">
+                              <p class="card-text">The asteroid has an energy of <span id='energy'></span><sup id="energyPow"></sup> joules before it 
+                                enters the atmosphere. To put that into perspective, this is about <span id='tnt'></span><sup id="tntPow"></sup> tons 
+                                of TNT, or about <span id='tntEnglish'></span><sup id="tntEnglishPow"></sup> times the energy of the Hiroshima Bomb.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card text-white bg-danger" style="margin: 10px">
+                            <div class="card-header">Seismic Effects</div>
+                            <div class="card-body">
+                              <p class="card-text">An earthquake will be caused with a Richter Scale magnitude of <span id='richter'></span>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="atmosphericEntry" style="width: 100%">
+                    <div class="col-sm-12">
+                        <div class="card text-white bg-success" style="margin: 10px">
+                            <div class="card-header">Atmospheric Entry</div>
+                            <div class="card-body">
+                              <p class="card-text">The asteroid begins to break up at an altitude of <span id="breakupAltitude"></span> meters. 
+                              <span id="dustAltitude"></span></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                <div class="container-fluid text-center text-md-left">
+                    <div class="row">
+                        <div class="col-md-6 mt-md-0 mt-3">
+                            <h5 class="text-uppercase">Citations and Sources</h5>
+                            <p>Remember: this content wasn't taken of the top of someone's head. It is the result of the hardwork put
+                                into a documentation by NASA and other space agencies. Here are the links to the other sources that were
+                                used as data.
+                            </p>
+                        </div>
+                        <div class="col-md-3 mb-md-0 mb-3">
+                            <h5 class="text-uppercase">Links</h5>
+                            <ul class="list-unstyled text-small">
+                                <li><a href="https://www.nasa.gov/mission_pages/station/news/orbital_debris.html" target="_blank" class="text-muted">NASA</a></li>
+                                <li><a href="https://www.statista.com/chart/24980/space-debris-in-orbit/" target="_blank" class="text-muted">Statista</a></li>
+                                <li><a href="https://www.space-track.org/documentation" target="_blank" class="text-muted">USSpaceCom</a></li>
+                                <li><a href="http://astria.tacc.utexas.edu/AstriaGraph/" target="_blank" class="text-muted">Astria Graph</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright text-center py-3" style="background-color: rgb(192, 192, 192);">Created by Jeff John Sunil</div>
+            </footer>
         </div>
-        <br>
-        <form action="results.php" method="get" id="impactCalculatorForm">
-            <div id="diameter">
-                <label>Asteroid Diameter</label>
-                <input name="inputDiameter" id="inputDiameter" type="range" min="1" max="1000000" value="500000" class="slider" onInput = "valueReflector(this.value, 'input', 'Diameter', 1000000, 1)" onchange="valueReflector(this.value, 'input', 'Diameter', 1000000, 1)">
-                Value: <input style = 'width: 100px' id="outputDiameter" type="number" placeholder="number" value = "500000" onInput = "valueReflector(this.value, 'output', 'Diameter', 1000000, 1)" onchange="valueReflector(this.value, 'output', 'Diameter', 1000000, 1)">
-                <select name="diameterUnit" class="diameterUnit">
-                    <option value="kilometers">kilometers</option>
-                    <option value="yards">yards</option>
-                    <option value="miles">miles</option>
-                </select>
-            </div>
-            <div id="density">
-                <label>Asteroid Density</label>
-                <input name="inputDensity" id="inputDensity" type="range" min="1" max="10000" value="5000" class="slider" onInput = "valueReflector(this.value, 'input', 'Density', 10000, 1)" onchange="valueReflector(this.value, 'input', 'Density', 10000, 1)">
-                Value: <input style = 'width: 100px' id="outputDensity" type="number" placeholder="number" value = "5000" onInput = "valueReflector(this.value, 'output', 'Density', 10000, 1)" onchange="valueReflector(this.value, 'output', 'Density', 10000, 1)">
-                kg/m<sup>3</sup>
-            </div>
-            <div id="velocity">
-                <label>Impact Velocity</label>
-                <input name="inputVelocity" id="inputVelocity" type="range" min="11" max="72" value="50" class="slider" onInput = "valueReflector(this.value, 'input', 'Velocity', 72, 11)" onchange="valueReflector(this.value, 'input', 'Velocity', 72, 11)">
-                Value: <input style = 'width: 100px' id="outputVelocity" type="number" placeholder="number" value = "50" onInput = "valueReflector(this.value, 'output', 'Velocity', 72, 11)" onchange="valueReflector(this.value, 'output', 'Velocity', 72, 11)">
-                km/s.
-            </div>
-            <p style="width: 50%; margin-left: 25%;">
-                This is the velocity of the projectile before it enters the atmosphere. The minimum impact velocity on Earth is 11 km/s. 
-                Typical impact velocities are 17 km/s for asteroids and 51 km/s for comets. The maximum Earth impact velocity for objects 
-                orbiting the sun is 72 km/s.
-            </p>
-            <button type="submit">Submit</button>
-        </form>
-        <p id="results"></p>
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
-            <div class="container-fluid text-center text-md-left">
-                <div class="row">
-                    <div class="col-md-6 mt-md-0 mt-3">
-                        <h5 class="text-uppercase">Citations and Sources</h5>
-                        <p>Remember: this content wasn't taken of the top of someone's head. It is the result of the hardwork put
-                            into a documentation by NASA and other space agencies. Here are the links to the other sources that were
-                            used as data.
-                        </p>
-                    </div>
-                    <div class="col-md-3 mb-md-0 mb-3">
-                        <h5 class="text-uppercase">Links</h5>
-                        <ul class="list-unstyled text-small">
-                            <li><a href="https://www.nasa.gov/mission_pages/station/news/orbital_debris.html" target="_blank" class="text-muted">NASA</a></li>
-                            <li><a href="https://www.statista.com/chart/24980/space-debris-in-orbit/" target="_blank" class="text-muted">Statista</a></li>
-                            <li><a href="https://www.space-track.org/documentation" target="_blank" class="text-muted">USSpaceCom</a></li>
-                            <li><a href="http://astria.tacc.utexas.edu/AstriaGraph/" target="_blank" class="text-muted">Astria Graph</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright text-center py-3" style="background-color: rgb(192, 192, 192);">Created by Jeff John Sunil</div>
-        </footer>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.1/dist/Chart.min.js"></script>
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
@@ -136,12 +185,15 @@
       feather.replace()
     </script>
     <script>
+        var myVar;
+        function showPage() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("content").style.display = "block";
+            var element = document.getElementById('results')
+            element.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
+        }
+
         function valueReflector(valNum, inputOutput, valType, max, min) {
-            if (valNum > max) {
-                valNum = max
-            } else if (valNum < min) {
-                valNum = min
-            }
             if (inputOutput == 'input') {
                 document.getElementById("output" + valType).value = valNum;
             } else {
@@ -150,9 +202,27 @@
             document.getElementById(inputOutput + valType).value = valNum;
         }
 
+        function convertToStandard(number, element) {
+            count = 0
+            while(number > 1) {
+                number /= 10
+                if (number > 1) {
+                    count += 1
+                }
+            }
+            number *= 10
+            document.getElementById(element).innerHTML = `${parseFloat(number.toFixed(2))} x 10`
+            document.getElementById(element + 'Pow').innerHTML = count
+            return [parseFloat(number.toFixed(2)), `${parseFloat(number.toFixed(2))} x 10`, count]
+        }
+
         function impactCalculator() {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("content").style.display = "none";
+            myVar = setTimeout(showPage, 3000);
+
             const form = document.getElementById('impactCalculatorForm');
-            diameter = form.elements[0].value
+            var diameter = form.elements[0].value
             diameterUnits = form.elements[2].value
             switch(diameterUnits) {
                 case 'kilometers':
@@ -161,14 +231,77 @@
                 case 'miles':
                     diameter *= 1609.34;
                     break;
-                case 'yards':
-                    diameter *= 0.9144;
+                case 'meters':
                     break;
             }
-            density = form.elements[3].value
-            velocity = form.elements[5].value
-            results = document.getElementById('results')
-            results.innerHTML = density
+            document.getElementById('results').style.display = 'block';
+            var density = form.elements[3].value
+            var velocity = form.elements[5].value
+            velocity *= 1000
+
+            // Energy
+            energy = (Math.PI / 12) * density * (diameter ** 3) * (velocity** 2)
+            energyHTML = convertToStandard(energy, 'energy')
+
+            // TNT
+            tntTons = energy / 4184000000
+            tntHTML = convertToStandard(tntTons, 'tnt')
+            times = tntTons / 15000
+            tntEnglishHTML = convertToStandard(times, 'tntEnglish')
+
+            // Seismic Effects
+            richterEnergy = energy / (10 ** 4)
+            richterVal = (Math.log10(richterEnergy) - 4.8) / 1.5
+            document.getElementById('richter').innerHTML = richterVal.toFixed(2)
+
+            // Atmospheric Entry
+            radius1 = 1000 / ((tntTons / 1000) ** (1/3))
+
+            function v(z) {
+                return velocity * (Math.E ** ((-3 * (Math.E ** (z/-8)) * 2 * 8000) / (4 * density * diameter * Math.sqrt(2) / 2)))
+            }
+
+            function rho(z) {
+                return Math.E ** (-z / 8000)
+            }
+
+            function L(z, dispersionL) {
+                return diameter * Math.sqrt(1 + (2 * 8000 / dispersionL) ** 2 * (e ** ((zStar - z) / 2 * 8000) - 1) ** 2)
+            }
+
+            function sigFigs(n, sig) {
+                var mult = Math.pow(10, sig - Math.floor(Math.log(n) / Math.LN10) - 1);
+                return Math.round(n * mult) / mult;
+            }
+
+            if (diameter > 1000) {
+                document.getElementById('atmosphericEntry').style.display = 'none';
+            } else {
+                document.getElementById('atmosphericEntry').style.display = 'block';
+                yI = 10 ** (2.107 + 0.0624 * Math.sqrt(density))
+                iF = (4.07 * 2 * 8000 * yI) / (density * diameter * (velocity ** 2) * Math.sqrt(2) / 2) 
+                zStar = -8000 * (Math.log(yI / (1 * velocity ** 2)) + 1.308 - (0.314 * iF) - (1.303 * Math.sqrt(1 - iF)))
+                dispersionL = diameter * Math.sqrt(2) / 2 * Math.sqrt(density / (2 * rho(zStar)))
+                zB = zStar - 16000 * Math.log(1 + (dispersionL / 16000) * Math.sqrt(48))
+                document.getElementById('breakupAltitude').innerHTML = sigFigs(zStar, 3)
+                if (zStar) {
+                    if (zB > 0) {
+                        document.getElementById('dustAltitude').innerHTML = "The asteroid bursts into a cloud of fragments at an altitude of "
+                        + sigFigs(zB, 3) + " meters."
+                    } else {
+                        document.getElementById('dustAltitude').innerHTML = "The projectile reaches the ground in a broken condition."
+                    }
+                } else {
+                    document.getElementById('atmosphericEntry').style.display = 'none';
+                }
+
+                console.clear()
+                console.log('yI', yI)
+                console.log('iF', iF)
+                console.log('zStar', zStar)
+                console.log('zB', zB)
+                console.log('peakPressure', peakPressure)
+            }
         }
     </script>
     <script>
