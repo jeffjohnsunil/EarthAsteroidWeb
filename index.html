@@ -45,6 +45,25 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
+        
+        .intro-text{
+            text-align: center;
+            font-size: 3em;
+            width: 0ch;
+            overflow: hidden;
+            margin: 0 auto;
+            white-space: nowrap;
+            background-clip: text;
+            background-image: linear-gradient(155deg, #fb7419, #bc1429, #319197);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .intro-text.active{
+            animation: typeIn 2s steps(28) forwards;
+        }
+        @keyframes typeIn {
+            to { width: 28ch; }
+        }
     </style></head>
     <body class="text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -65,7 +84,7 @@
         <div class="p-5 flex-column", style="background-image: url('https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg'); height: 100%">
             <div class="jumbotron jumbotron-fluid">
                 <div class="container">
-                    <h1 class="display-5">Earth Asteroid Web</h1>
+                    <h1 class="display-5 intro-text">Earth Asteroid Web</h1>
                     <p class="lead">A warning: we are getting trapped...</p>
                 </div>
             </div>
@@ -225,5 +244,38 @@
             }
         });
 
+    </script>
+    <script>
+        function scrollTrigger(selector, options = {}){
+            let els = document.querySelectorAll(selector)
+            els = Array.from(els)
+            els.forEach(el => {
+                addObserver(el, options)
+            })
+        }
+        function addObserver(el, options){
+            if(!('IntersectionObserver' in window)){
+                if(options.cb){
+                    options.cb(el)
+                }else{
+                    entry.target.classList.add('active')
+                }
+                return
+            }
+            let observer = new IntersectionObserver((entries, observer) => { //this takes a callback function which receives two arguments: the elemts list and the observer instance
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        if(options.cb){
+                            options.cb(el)
+                        }else{
+                            entry.target.classList.add('active')
+                        }
+                        observer.unobserve(entry.target)
+                    }
+                })
+            }, options)
+            observer.observe(el)
+        }
+        scrollTrigger('.intro-text')
     </script>
 </html>

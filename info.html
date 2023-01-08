@@ -21,6 +21,15 @@
         "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
           <script src=
         "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+        <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+        <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@<version>/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@<version>/examples/jsm/"
+            }
+        }
+        </script>
     <style>
         body {
             font-family: "Verdana";
@@ -67,7 +76,8 @@
             padding: 1em;
             transform-origin: 0 0;
             transform: scale(.8);
-            width: 30%;
+            width: 50%;
+            z-index: 12;
         }
 
         .earth .more-info h1 {
@@ -125,6 +135,31 @@
             visibility: hidden;
             height: 0px;
         }
+
+        .intro-text{
+            text-align: center;
+            font-size: 3em;
+            width: 0ch;
+            overflow: hidden;
+            margin: 0 auto;
+            white-space: nowrap;
+            background-clip: text;
+            background-image: linear-gradient(155deg, #fb7419, #bc1429, #319197);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .intro-text.active{
+            animation: typeIn 2s steps(28) forwards;
+        }
+        @keyframes typeIn {
+            to { width: 28ch; }
+        }
+        .sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 100px;
+            font-size: 20px;
+        }
     </style></head>
     <body class="text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -145,7 +180,7 @@
         <div class="p-5 flex-column", style="background-image: url('https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg'); height: 100%">
             <div class="jumbotron jumbotron-fluid">
                 <div class="container">
-                    <h1 class="display-5">How are asteroids classified?</h1>
+                    <h1 class="display-5 intro-text">How are asteroids classified?</h1>
                     <p class="lead">Get ready. It's time to science.</p>
                 </div>
             </div>
@@ -173,60 +208,100 @@
                 </div>
             </div>
         </div><br><br>
-        <div class='tag info'>
-            <p>Click on each asteroid to learn more!</p>
-        </div>
-        <div class="earth" style="background-color: #000">
-            <br><div class="more-info">
-                <h1>Amors</h1>
-                <ul>
-                  <li>Orbits are larger than Earth's but smaller than Mars's.</li>
-                  <li>The semi-major axis is greater than 1 au.</li>
-                  <li>The perihelion is between 1.017 au and 1.3 au.</li>
-                </ul>
+        <div class="row" style="background-color: #000; width: 101%;">
+            <div class="col-sm-6">
+                <div class="earth" style="background-color: #000">
+                    <br><div class="more-info">
+                        <h1>Amors</h1>
+                        <ul>
+                          <li>Orbits are larger than Earth's but smaller than Mars's.</li>
+                          <li>The semi-major axis is greater than 1 au.</li>
+                          <li>The perihelion is between 1.017 au and 1.3 au.</li>
+                        </ul>
+                    </div>
+                    <img src="Amors.png"><br><br><br><br><br>
+                </div>
             </div>
-            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
-        </div>
-        <div class="earth" style="background-color: #000">
-            <br><div class="more-info">
-                <h1>Apollos</h1>
-                <ul>
-                  <li>Orbits cross the Earth's but the semi-major axes are bigger.</li>
-                  <li>The semi-major axis is greater than 1 au.</li>
-                  <li>The perihelion is less than 1.017 au.</li>
-                </ul>
+            <div class="col-sm-6">
+                <div class="earth" style="background-color: #000">
+                    <br><div class="more-info">
+                        <h1>Apollos</h1>
+                        <ul>
+                          <li>Orbits cross the Earth's but the semi-major axes are bigger.</li>
+                          <li>The semi-major axis is greater than 1 au.</li>
+                          <li>The perihelion is less than 1.017 au.</li>
+                        </ul>
+                    </div>
+                    <img src="Apollos.png"><br><br><br><br><br>
+                </div>
             </div>
-            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
         </div>
-        <div class="earth" style="background-color: #000">
-            <br><div class="more-info">
-                <h1>Atens</h1>
-                <ul>
-                  <li>Orbits cross the Earth's but the semi-major axes are smaller.</li>
-                  <li>The semi-major axis is less than 1 au.</li>
-                  <li>The aphelion is greater than 0.983 au.</li>
-                </ul>
+        <div class="row" style="background-color: #000; width: 101%;">
+            <div class="col-sm-6">        
+                <div class="earth" style="background-color: #000">
+                    <br><div class="more-info">
+                        <h1>Atens</h1>
+                        <ul>
+                        <li>Orbits cross the Earth's but the semi-major axes are smaller.</li>
+                        <li>The semi-major axis is less than 1 au.</li>
+                        <li>The aphelion is greater than 0.983 au.</li>
+                        </ul>
+                    </div>
+                    <img src="Atens.png"><br><br><br><br><br>
+                </div>
             </div>
-            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
+            <div class="col-sm-6">
+                <div class="earth" style="background-color: #000">
+                    <br><div class="more-info">
+                        <h1>Atiras</h1>
+                        <ul>
+                          <li>Orbits are entirely contained in the Earth's.</li>
+                          <li>The semi-major axis is less than 1 au.</li>
+                          <li>The aphelion is less than 0.983 au.</li>
+                        </ul>
+                    </div>
+                    <img src="Atiras.png"><br><br><br><br><br>
+                </div>
+            </div>
+            <div class='alertTrigger'></div>
         </div>
-        <div class="earth" style="background-color: #000">
-            <br><div class="more-info">
-                <h1>Atiras</h1>
-                <ul>
-                  <li>Orbits are entirely contained in the Earth's.</li>
-                  <li>The semi-major axis is less than 1 au.</li>
-                  <li>The aphelion is less than 0.983 au.</li>
-                </ul>
-            </div>
-            <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"><br><br><br><br><br>
-        </div><br><br>
-        <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg"  class='invisible' id="frozen-asteroid">
-        <br class="location added"><br><br><br><br>
-        <br><br><br><br><br>
-        <br><br><br><br><br>
-        <br><br><br><br><br>
-        <br><br><br><br><br>
-        <br><br><br><br><br>
+        <!-- <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/1_bennu-beauty.height-1024.jpg" class='sticky' style="width: 50%; left: 75%;"> -->
+        <br>
+        <div class="location">
+            <br><br><br><br><br>
+            <br><br><br><br><br>
+            <br><br><br><br><br>
+            <br><br><br><br><br>
+            <br><br><br><br><br>
+        </div>
+        <script src="https://threejs.org/build/three.js"></script>
+        <script type="module">
+            import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth - 20, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+    
+            var geometry = new THREE.SphereGeometry( 5, 32, 16 );
+            var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+            var sphere = new THREE.Mesh( geometry, material );
+            scene.add( sphere );
+
+            var geometryTorus = new THREE.TorusGeometry( 10, 0.25, 16, 100, Math.PI * 2 );
+            var materialTorus = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+            var torus = new THREE.Mesh( geometryTorus, materialTorus );
+            scene.add( torus );
+    
+            camera.position.z = 30;
+    
+            function animate() {
+                requestAnimationFrame( animate );
+                renderer.render( scene, camera );
+            };
+    
+            animate();
+        </script>
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="container-fluid text-center text-md-left">
                 <div class="row">
@@ -257,34 +332,80 @@
       feather.replace()
     </script>
     <script>
+        var alertTriggerActive = true
         $(document).on("scroll", function() {
             var pageTop = $(document).scrollTop();
             var pageBottom = pageTop + $(window).height();
             var tags = $(".tag");
+            var alertTriggerers = $(".alertTrigger")
 
             for (var i = 0; i < tags.length; i++) {
                 var tag = tags[i];
 
                 if ($(tag).position().top < pageBottom) {
-                $(tag).addClass("visible");
+                    $(tag).addClass("visible");
                 } else {
-                $(tag).removeClass("visible");
+                    $(tag).removeClass("visible");
+                }
+            }
+
+            for (var i = 0; i < alertTriggerers.length; i++) {
+                var alertTrigger = alertTriggerers[i];
+
+                if ($(alertTrigger).position().top < pageBottom & alertTriggerActive) {
+                    //alert('Click each asteroid to learn more.');
+                    alertTriggerActive = false
                 }
             }
         });
+
         window.onscroll = function() {
-            console.log(window.pageYOffset);
-            var asteroid = document.getElementById('frozen-asteroid');
-            var location = document.getElementsByClassName('location');
-            console.log(location.top)
-            if ( window.pageYOffset > 1500 & window.pageYOffset < 2000) {
-                asteroid.classList.add("fix");
-                asteroid.classList.remove("invisible");
-            } else {
-                asteroid.classList.remove("fix");
-                asteroid.classList.add("invisible");
+            var asteroids = document.getElementsByClassName('frozen-element');
+            var locations = document.getElementsByClassName('location');
+            var pageTop = $(document).scrollTop();
+            var pageBottom = pageTop + $(window).height();
+            for (var i = 0; i < asteroids.length; i++) {
+                var location = locations[i]
+                var asteroid = asteroids[i]
+                if ( $(location).position().top < pageBottom & pageTop > $(location).position().top) {
+                    $(asteroid).addClass("sticky");
+                } else {
+                    $(asteroid).removeClass("sticky");
+                }
             }
         }
-
+    </script>
+    <script>
+        function scrollTrigger(selector, options = {}){
+            let els = document.querySelectorAll(selector)
+            els = Array.from(els)
+            els.forEach(el => {
+                addObserver(el, options)
+            })
+        }
+        function addObserver(el, options){
+            if(!('IntersectionObserver' in window)){
+                if(options.cb){
+                    options.cb(el)
+                }else{
+                    entry.target.classList.add('active')
+                }
+                return
+            }
+            let observer = new IntersectionObserver((entries, observer) => { //this takes a callback function which receives two arguments: the elemts list and the observer instance
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        if(options.cb){
+                            options.cb(el)
+                        }else{
+                            entry.target.classList.add('active')
+                        }
+                        observer.unobserve(entry.target)
+                    }
+                })
+            }, options)
+            observer.observe(el)
+        }
+        scrollTrigger('.intro-text')
     </script>
 </html>
