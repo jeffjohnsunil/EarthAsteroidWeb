@@ -38,7 +38,7 @@
         }
 
         .parallax {
-            background-image: url("https://images.newscientist.com/wp-content/uploads/2021/08/20165006/PRI_195542462.jpg");
+            background-image: url("https://media-cldnry.s-nbcnews.com/image/upload/newscms/2014_10/240016/140309-cosmos-jms-1934.jpg");
             min-height: 500px;
             background-attachment: fixed;
             background-position: center;
@@ -96,9 +96,9 @@
                     <h1>What do you mean?</h1>
                     <p>Surrounding the Earth, there exists a large group of asteroids that orbit the Earth... very closely. Some of these
                         are made of rocks, but the truth is, most of them are man-made, or more specifically, the waste that rockets dispose of when 
-                        they exit the atmosphere of the Earth. As of November 4, 2021, 27,323 near-Earth asteroids are known, 2,224 of which are 
-                        both sufficiently large and come sufficiently close to Earth to be considered potentially hazardous, and these asteroids 
-                        will last for millions of years.
+                        they exit the atmosphere of the Earth. As of November 4, 2021, 130 million pieces of debris larger than 1 millimeter in orbit 
+                        around the Earth, 2,224 of which are both sufficiently large and come sufficiently close to Earth to be considered 
+                        potentially hazardous, and these asteroids will last for millions of years.
                     </p>
                 </div>
             </div>
@@ -132,7 +132,7 @@
                     <h1>Facts and Figures</h1>
                     <p>The amount of debris that orbits the Earth has been increasing exponentially since the first space debris was discovered
                         in 1959. Also, a lot of this debris isn't even functional spacecraft - it's mainly the parts that rockets dispatch and 
-                        excess rocket fuel. Learn more by navigating to the Info page. Note that the above stats are only estimates.
+                        excess rocket fuel. Learn more by <a href="info.html">navigating to the Info page.</a> Note that the above stats are only estimates.
                     </p>
                 </div>
             </div>
@@ -140,7 +140,7 @@
         <div class="parallax"><br>
             <div class="container">
                 <div class="tag row">
-                    <div class="col-lg-4 align-self-start" style="background-color: white;">
+                    <div class="col-lg-4 align-self-start" style="background-color: white; border-radius: 25px;">
                         <h1>Which ones are the threats?</h1>
                         <p>Any asteroid that has a diameter approximately 35 meters across can pose major threats to an area, but any
                             object larger than a millimeter in diameter would be enough to kill someone.
@@ -148,14 +148,62 @@
                     </div>
                 </div><br><br>
                 <div class="tag row justify-content-end">
-                    <div class="col-lg-4 align-self-end" style="background-color: white;">
+                    <div class="col-lg-4 align-self-end" style="background-color: white; border-radius: 25px;">
                         <h1>How are they classified as being near the Earth?</h1>
                         <p>The technical truth is that any Near Earth Object should have a trajectory that brings it to within approximately
                             45 million kilometers of the Earth's orbit.
                         </p>
                     </div>
                 </div><br><br>
+            </div><br><br><br><br>
+            <div class="container">
+                <div class="tag row justify-content-center">
+                    <div class="col-lg align-self-center" style="background-color: white; border-radius: 25px;">
+                        <h1 style="font-size: 72px;">How can you spread awareness?</h1><br><br>
+                        <div class="container">
+                            <div class="tag row">
+                                <div class="col-lg-6 align-self-start" style="background-color: white; border-radius: 25px; text-align: left;">
+                                    <h1>Support organizations</h1>
+                                    <p>There are many organizations that are working to solve this problem, get rid of space debris and make
+                                        sure that regulations are created to make sure it never occurs again.
+                                    </p>
+                                    <marquee scrollamount = 5>
+                                        <a href="https://voyagerspace.com/">Voyager Space |</a>
+                                        <a href="https://www.inmarsat.com/en/index.html">Inmarsat |</a>
+                                        <a href="https://astroscale.com/">Astroscale |</a>
+                                        <a href="https://www.airbus.com/en">Airbus |</a>
+                                        <a href="https://www.planet.com/">Planet |</a>
+                                        <a href="https://wpastra.com/">Astra |</a>
+                                        <a href="https://www.lockheedmartin.com/en-us/capabilities/space.html">Lockheed Martin |</a>
+                                    </marquee>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="tag row justify-content-end">
+                                <div class="col-lg-6 align-self-end" style="background-color: white; border-radius: 25px; text-align: left;">
+                                    <h1>Share this website</h1>
+                                    <p>This website is very informative an simplifies a lot of the content. Share it or any other one that
+                                        you think will help. This is serious, so make it count!
+                                    </p>
+                                </div>
+                            </div><br><br>
+                            <div class="tag row">
+                                <div class="col-lg-12 align-self-start" style="background-color: white; border-radius: 25px; text-align: left;">
+                                    <h1>Host public events and lectures</h1>
+                                    <p>Hosting public events and lectures, such as panel discussions, 
+                                        workshops, and science fairs, can help to raise awareness about space debris and to generate interest 
+                                        in the issue.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br><br>
             </div>
+        </div><br><br>
+        <div class="parallax" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg'); height: 100%">
+            <br><br><br><br><br><br><br><br><br>
+            <br class="lockScroll">
         </div>
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="container-fluid text-center text-md-left">
@@ -237,13 +285,12 @@
                 var tag = tags[i];
 
                 if ($(tag).position().top < pageBottom) {
-                $(tag).addClass("visible");
+                    $(tag).addClass("visible");
                 } else {
-                $(tag).removeClass("visible");
+                    $(tag).removeClass("visible");
                 }
             }
         });
-
     </script>
     <script>
         function scrollTrigger(selector, options = {}){
@@ -262,7 +309,7 @@
                 }
                 return
             }
-            let observer = new IntersectionObserver((entries, observer) => { //this takes a callback function which receives two arguments: the elemts list and the observer instance
+            let observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if(entry.isIntersecting){
                         if(options.cb){
@@ -277,5 +324,33 @@
             observer.observe(el)
         }
         scrollTrigger('.intro-text')
+    </script>
+    <script>
+        activated = true
+
+        function disableScroll() {
+            scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+            scrollLeft =
+            window.pageXOffset || document.documentElement.scrollLeft,
+                window.onscroll = function() {
+                    window.scrollTo(scrollLeft, scrollTop);
+                };
+        }
+          
+        function enableScroll() {
+            window.onscroll = function() {};
+        }
+
+        $(window).scroll(function () {
+            var lockScroll = $(".lockScroll")
+            var pageTop = $(document).scrollTop();
+            var pageBottom = pageTop + $(window).height();
+            if (($(lockScroll).position().top < pageBottom) & (activated)) {
+                disableScroll()
+                setTimeout(enableScroll, 3000)
+                activated = false
+            }
+        });
     </script>
 </html>
