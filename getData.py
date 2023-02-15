@@ -81,6 +81,8 @@ with requests.Session() as session:
 
     # use the json package to break the json formatted response text into a Python structure (a list of dictionaries)
     retData = json.loads(resp.text)
+    with open("starlink-track.json", "w") as outfile:
+        json.dump(retData, outfile)
     satCount = len(retData)
     numAnalysed = 0
     maxs = 1
