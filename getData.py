@@ -81,13 +81,13 @@ with requests.Session() as session:
 
     # use the json package to break the json formatted response text into a Python structure (a list of dictionaries)
     retData = json.loads(resp.text)
-    with open("starlink-track.json", "w") as outfile:
-        json.dump(retData, outfile)
+    jsonPush = []
     satCount = len(retData)
     numAnalysed = 0
     maxs = 1
     for e in retData:
         if numAnalysed < 1000:
+            jsonPush.append(e)
             # each element is one reading of the orbital elements for one Starlink
             print("Scanning satellite called " + e['SATNAME'])
             worksheet.write(wsline, 0, e['INTLDES'])
@@ -117,5 +117,7 @@ with requests.Session() as session:
                 maxs = 1
         numAnalysed += 1
     session.close()
+    with open("starlink-track.json", "w") as outfile:
+        json.dump(jsonPush, outfile)
 workbook.close()
 print("Completed session") 
