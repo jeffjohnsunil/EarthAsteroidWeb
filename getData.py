@@ -87,7 +87,26 @@ with requests.Session() as session:
     maxs = 1
     for e in retData:
         if numAnalysed < 1000:
-            jsonPush.append(e)
+            semiMajorAxis = (float(e['APOGEE']) + float(e['PERIGEE'])) / 2
+            eccentricity = (float(e['APOGEE']) / semiMajorAxis) - 1
+            semiMinorAxis = math.sqrt(semiMajorAxis ** 2 * (1 - eccentricity ** 2))
+            jsonPush.append({
+                'INTLDES': e['INTLDES'],
+                'NORAD_CAT_ID': int(e['NORAD_CAT_ID']),
+                'OBJECT_TYPE': e['OBJECT_TYPE'],
+                'SATNAME': e['SATNAME'],
+                'COUNTRY': e['COUNTRY'],
+                'LAUNCH': e['LAUNCH'],
+                'PERIOD': float(e['PERIOD']),
+                'INCLINATION': float(e['INCLINATION']),
+                'APOGEE': float(e['APOGEE']),
+                'PERIGEE': float(e['PERIGEE']),
+                'LAUNCH_YEAR': int(e['LAUNCH_YEAR']),
+                'CURRENT': e['CURRENT'],
+                'ECCENTRICITY': eccentricity,
+                'SEMI_MAJOR_AXIS': semiMajorAxis,
+                'SEMI_MINOR_AXIS': semiMinorAxis
+            })
             # each element is one reading of the orbital elements for one Starlink
             print("Scanning satellite called " + e['SATNAME'])
             worksheet.write(wsline, 0, e['INTLDES'])

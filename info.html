@@ -374,10 +374,11 @@
         import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
         function UploadProcess() {
             //fetch("https://api.apispreadsheets.com/data/aqc00bPoFhAFF5GN/").then(res=>{
-            fetch("https://www.earthasteroidweb.live/starlink-track.xlsx").then(res=>{
+            fetch("https://www.earthasteroidweb.live/starlink-track.json").then(res=>{
                 if (res.status === 200){
                     // SUCCESS
                     res.json().then(data=>{
+                        console.log(data)
                         GetTableFromExcel(data)
                     }).catch(err => console.log(err))
                 }
@@ -446,7 +447,7 @@
                     return element;
                 }
             }
-            var excelRows = data["data"]
+            var excelRows = data
 
             let camera, scene, renderer;
             let geometry, material, mesh;
@@ -480,6 +481,7 @@
                 controls.maxDistance = 2500;
 
                 for ( let i = 0; i < excelRows.length; i ++ ) {
+                    console.log(excelRows[i]['SEMI_MAJOR_AXIS'])
                     const curve = new THREE.EllipseCurve(
                         0,  0,
                         (excelRows[i].SEMI_MINOR_AXIS + 6378) / 100, (excelRows[i].SEMI_MAJOR_AXIS + 6378) / 100,
