@@ -4,36 +4,85 @@
 		<meta charset="utf-8">
 		<title>My first three.js app</title>
 		<style>
-			body { margin: 0; }
+			body { 
+                margin: 0;
+                text-align: center;
+            }
 		</style>
 	</head>
 	<body>
-		<script src="https://threejs.org/build/three.js"></script>
-		<script>
-			const scene = new THREE.Scene();
-			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        <div id="container"></div>
+        <script src="js/three.js"></script>
+        <script type="module">
+            let camera, scene, renderer;
+            let geometry, material, mesh;
+            import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
 
-			const renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
+            init();
+            animate();
 
-			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			const cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+            function init() {
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+                
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color( 0xcccccc );
 
-			camera.position.z = 5;
+                camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+                
+                const controls = new OrbitControls( camera, renderer.domElement );
+                
+                camera.position.set( 100, 100, 0 );
+                controls.update();
 
-			function animate() {
-				requestAnimationFrame( animate );
+                const geometry = new THREE.CylinderGeometry( 0, 10, 30, 4, 1 );
+				const material = new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } );
 
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
+				for ( let i = 0; i < 500; i ++ ) {
+                    const curve = new THREE.EllipseCurve(
+                        0,  0,            // ax, aY
+                        203, 103,           // xRadius, yRadius
+                        0,  2 * Math.PI,  // aStartAngle, aEndAngle
+                        false,            // aClockwise
+                        1                 // aRotation
+                    );
 
-				renderer.render( scene, camera );
-			};
+                    const points = curve.getPoints( 50 );
+                    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+                    const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+				    const mesh = new THREE.Line( geometry, material );
+					scene.add( mesh );
 
-			animate();
+				}
+
+                const geometry1 = new THREE.SphereGeometry( 63.71, 32, 16 );
+                const material1 = new THREE.MeshBasicMaterial( {
+                    map: new THREE.TextureLoader().load(
+                        'https://raw.githubusercontent.com/BHouwens/SolarSim/master/images/earthmap1k.jpg'
+                    )
+                } );
+
+                const mesh1 = new THREE.Mesh( geometry1, material1 );
+                scene.add( mesh1 );
+
+                const dirLight1 = new THREE.DirectionalLight( 0xffffff );
+				dirLight1.position.set( 1, 1, 1 );
+				scene.add( dirLight1 );
+
+				const dirLight2 = new THREE.DirectionalLight( 0x002288 );
+				dirLight2.position.set( - 1, - 1, - 1 );
+				scene.add( dirLight2 );
+
+				const ambientLight = new THREE.AmbientLight( 0x222222 );
+				scene.add( ambientLight );
+            }
+
+            function animate() {
+                requestAnimationFrame( animate );
+                renderer.render( scene, camera );
+            }
 		</script>
 	</body>
 </html>

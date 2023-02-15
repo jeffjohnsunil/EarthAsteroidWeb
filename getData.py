@@ -47,23 +47,22 @@ z3_format = workbook.add_format({'num_format': '#,##0.000'})
 # write the headers on the spreadsheet
 now = datetime.now()
 nowStr = now.strftime("%m/%d/%Y %H:%M:%S")
-worksheet.write('A1', 'Starlink data from' + uriBase + " on " + nowStr)
-worksheet.write('A3','INTLDES')
-worksheet.write('B3','NORAD_CAT_ID')
-worksheet.write('C3','OBJECT_TYPE')
-worksheet.write('D3','SATNAME')
-worksheet.write('E3','COUNTRY')
-worksheet.write('F3','LAUNCH')
-worksheet.write('G3','PERIOD')
-worksheet.write('H3','INCLINATION')
-worksheet.write('I3','APOGEE')
-worksheet.write('J3','PERIGEE')
-worksheet.write('K3','LAUNCH_YEAR')
-worksheet.write('L3','CURRENT')
-worksheet.write('M3','ECCENTRICITY')
-worksheet.write('N3','SEMI_MAJOR_AXIS')
-worksheet.write('O3','SEMI_MINOR_AXIS')
-wsline = 3
+worksheet.write('A1','INTLDES')
+worksheet.write('B1','NORAD_CAT_ID')
+worksheet.write('C1','OBJECT_TYPE')
+worksheet.write('D1','SATNAME')
+worksheet.write('E1','COUNTRY')
+worksheet.write('F1','LAUNCH')
+worksheet.write('G1','PERIOD')
+worksheet.write('H1','INCLINATION')
+worksheet.write('I1','APOGEE')
+worksheet.write('J1','PERIGEE')
+worksheet.write('K1','LAUNCH_YEAR')
+worksheet.write('L1','CURRENT')
+worksheet.write('M1','ECCENTRICITY')
+worksheet.write('N1','SEMI_MAJOR_AXIS')
+worksheet.write('O1','SEMI_MINOR_AXIS')
+wsline = 1
 
 # use requests package to drive the RESTful session with space-track.org
 with requests.Session() as session:
@@ -86,7 +85,7 @@ with requests.Session() as session:
     numAnalysed = 0
     maxs = 1
     for e in retData:
-        if numAnalysed < 100:
+        if numAnalysed < 1000:
             # each element is one reading of the orbital elements for one Starlink
             print("Scanning satellite called " + e['SATNAME'])
             worksheet.write(wsline, 0, e['INTLDES'])

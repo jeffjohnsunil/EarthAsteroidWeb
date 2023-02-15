@@ -334,20 +334,23 @@
                 * (Math.sqrt(2) / 2) ** (1/3)
             diameterTCrater /= 1000
             depthTCrater = diameterTCrater / (2 * Math.sqrt(2))
-            if (diameterTCrater > 3200) {
-                diameterFCrater = 1.17 * (diameterTCrater) ** 1.13 / 3.2 ** 0.13
-            } else {
-                diameterFCrater = 1.25 * diameterTCrater
-            }
+            diameterFCrater = 1.17 * (diameterTCrater) ** 1.13 / 3.2 ** 0.13
             volumeBrecciaLens = 0.032 * diameterFCrater ** 3
             hFCrater = 0.07 * diameterTCrater ** 4 / diameterFCrater ** 3
             topBrecciaLens = 2.8 * volumeBrecciaLens * ((depthTCrater + hFCrater) / (depthTCrater * diameterFCrater ** 2))
-            depthFCrater = depthTCrater + hFCrater - topBrecciaLens
+            depthFCrater = 0.294 * diameterFCrater ** 0.301 + 0.003
             console.clear()
             console.log(diameterTCrater)
             console.log(depthTCrater)
             console.log(diameterFCrater)
-            console.log(0.4 * diameterFCrater ** 0.3)
+            console.log(depthFCrater)
+
+            zB1 = zB / (tntTons / 1000) ** (1/3)
+            rX = 290 / 1000
+            pX = 75000
+            r1 = (diameter + 70) / (tntTons / 1000) ** (1/3)
+            peakOverpressure = 75000 * rX / (4 * r1) * (1 + 3 * (rX / r1) ** (1.3))
+            console.log(peakOverpressure)
         }
     </script>
     <script>
