@@ -181,7 +181,6 @@
                     <a class="nav-item nav-link" href="index.html">Home</a>
                     <a class="nav-item nav-link active" href="info.html">Info <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="#">Classes</a>
-                    <a class="nav-item nav-link" href="simulation.html">Simulation</a>
                     <a class="nav-item nav-link" href="calculator.html">Calculator</a>
                 </div>
             </div>
@@ -281,8 +280,9 @@
         <div id="controlsInfo">
             <div id="controlsInfoHeader">Click here to move</div>
             <p>This is a simulation to help you visualize how many asteroids there are. Blue objects represent parts of rocket bodies.
-                Yellow objects represent payload (waste ejected from rockets). Grey objects represent general debris. 
-                Press 'O' on your keyboard if you want to trigger viweing orbits.</p>
+                Yellow objects represent payload (waste ejected from rockets). Grey objects represent general debris and green ones represent
+                others. Check the box if you want to trigger viweing orbits.</p>
+            <input type="checkbox" id="orbitCheck"> View orbits
         </div>
         <script src="js/three.js"></script>
     </body>
@@ -448,7 +448,7 @@
                 }
             }
             var excelRows = data
-
+            //var excelRows = data['data']
             let camera, scene, renderer;
             let geometry, material, mesh;
             const orbitGroup = new THREE.Group()
@@ -481,7 +481,7 @@
                 controls.maxDistance = 2500;
 
                 for ( let i = 0; i < excelRows.length; i ++ ) {
-                    console.log(excelRows[i]['SEMI_MAJOR_AXIS'])
+                    console.log(excelRows[i].COUNTRY)
                     const curve = new THREE.EllipseCurve(
                         0,  0,
                         (excelRows[i].SEMI_MINOR_AXIS + 6378) / 100, (excelRows[i].SEMI_MAJOR_AXIS + 6378) / 100,
@@ -553,7 +553,9 @@
                 const ambientLight = new THREE.AmbientLight( 0x222222 );
                 scene.add( ambientLight );
 
-                document.addEventListener('keypress', onDocumentKeyPress );
+                document.querySelector('#orbitCheck').addEventListener('change', (event) =>{
+                    onOrbitCheck()
+                })
             }
 
             function animate() {
@@ -562,16 +564,13 @@
             }
             
             var triggered = true
-            function onDocumentKeyPress( event ) {
-                const keyCode = event.key;
-                if ( keyCode == 'o' | keyCode == 'O' ) {
-                    if (triggered == true) {
-                        scene.add(orbitGroup)
-                        triggered = false
-                    } else {
-                        scene.remove(orbitGroup)
-                        triggered = true
-                    }
+            function onOrbitCheck( ) {
+                if (triggered == true) {
+                    scene.add(orbitGroup)
+                    triggered = false
+                } else {
+                    scene.remove(orbitGroup)
+                    triggered = true
                 }
             }
         };

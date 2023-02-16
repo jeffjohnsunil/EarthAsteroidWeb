@@ -24,6 +24,7 @@
     <style>
         body {
             font-family: "Verdana";
+            color: black;
         }
 
         .tag {
@@ -64,6 +65,49 @@
         @keyframes typeIn {
             to { width: 6.5ch; }
         }
+
+        .typewriterText {
+            color: #fff;
+            font-family: monospace;
+            overflow: hidden; /* Ensures the content is not revealed until the animation */
+            border-right: .15em solid orange; /* The typwriter cursor */
+            white-space: nowrap; /* Keeps the content on a single line */
+            margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: 
+                typing 5s steps(41, end) 1s 1 normal both,
+                blink-caret .5s step-end infinite;
+        }
+
+        .typewriterText2 {
+            color: #fff;
+            font-family: monospace;
+            overflow: hidden; /* Ensures the content is not revealed until the animation */
+            border-right: .15em solid orange; /* The typwriter cursor */
+            white-space: nowrap; /* Keeps the content on a single line */
+            margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: 
+                typing 4s steps(33, end) 7s 1 normal both,
+                blink-caret2 .5s step-end infinite;
+        }
+
+        /* The typing effect */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange }
+        }
+
+        @keyframes blink-caret2 {
+            from, to { border-color: transparent }
+            50% { border-color: green }
+        }
     </style></head>
     <body class="text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -76,7 +120,6 @@
                     <a class="nav-item nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="info.html">Info</a>
                     <a class="nav-item nav-link" href="#">Classes</a>
-                    <a class="nav-item nav-link" href="simulation.html">Simulation</a>
                     <a class="nav-item nav-link" href="calculator.html">Calculator</a>
                 </div>
             </div>
@@ -203,10 +246,15 @@
                 </div><br><br>
             </div>
         </div><br><br>
-        <div class="parallax" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg'); height: 100%">
-            <br><br><br><br><br><br><br><br><br>
-            <br class="lockScroll">
+        <div class="parallax" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg'); height: 100vh; width: 100vw; display: table-cell; vertical-align: middle;">
+            <div class="typewriter" style="display: inline-block">
+                <h1 class="" id="triggerText">Our space junk problem is out of orbit...</h1>
+            </div>
+            <div class="typewriter" style="display: inline-block">
+                <h1 class="" id="triggerText2">A cleaner space is a safer space.</h1>
+            </div>
         </div>
+        <p class="lockScroll"></p>
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="container-fluid text-center text-md-left">
                 <div class="row">
@@ -350,7 +398,11 @@
             var pageBottom = pageTop + $(window).height();
             if (($(lockScroll).position().top < pageBottom) & (activated)) {
                 disableScroll()
-                setTimeout(enableScroll, 3000)
+                setTimeout(enableScroll, 12000)
+                triggerText = document.getElementById("triggerText")
+                triggerText.classList.add("typewriterText");
+                triggerText2 = document.getElementById("triggerText2")
+                triggerText2.classList.add("typewriterText2");
                 activated = false
             }
         });
