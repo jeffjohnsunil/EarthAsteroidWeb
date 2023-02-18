@@ -164,11 +164,21 @@
                 </div>
                 <div class="row" id="atmosphericEntry" style="width: 100%">
                     <div class="col-sm-12">
-                        <div class="card text-white bg-success" style="margin: 10px">
+                        <div class="card text-black bg-warning" style="margin: 10px">
                             <div class="card-header">Atmospheric Entry</div>
                             <div class="card-body">
                               <p class="card-text">The asteroid begins to break up at an altitude of <span id="breakupAltitude"></span> meters. 
                               <span id="dustAltitude"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="craterDimensions" style="width: 100%">
+                    <div class="col-sm-12">
+                        <div class="card text-white bg-info" style="margin: 10px">
+                            <div class="card-header">Crater Dimensions</div>
+                            <div class="card-body">
+                              <p class="card-text"><span id="transientCrater"></span><span id='finalCrater'></span></p>
                             </div>
                         </div>
                     </div>
@@ -261,22 +271,22 @@
             velocity *= 1000
 
             // Energy
-            energy = (Math.PI / 12) * density * (diameter ** 3) * (velocity** 2)
-            energyHTML = convertToStandard(energy, 'energy')
+            var energy = (Math.PI / 12) * density * (diameter ** 3) * (velocity** 2)
+            var energyHTML = convertToStandard(energy, 'energy')
 
             // TNT
-            tntTons = energy / 4184000000
-            tntHTML = convertToStandard(tntTons, 'tnt')
-            times = tntTons / 15000
-            tntEnglishHTML = convertToStandard(times, 'tntEnglish')
+            var tntTons = energy / 4184000000
+            var tntHTML = convertToStandard(tntTons, 'tnt')
+            var times = tntTons / 15000
+            var tntEnglishHTML = convertToStandard(times, 'tntEnglish')
 
             // Seismic Effects
-            richterEnergy = energy / (10 ** 4)
-            richterVal = (Math.log10(richterEnergy) - 4.8) / 1.5
+            var richterEnergy = energy / (10 ** 4)
+            var richterVal = (Math.log10(richterEnergy) - 4.8) / 1.5
             document.getElementById('richter').innerHTML = richterVal.toFixed(2)
 
             // Atmospheric Entry
-            radius1 = 1000 / ((tntTons / 1000) ** (1/3))
+            var radius1 = 1000 / ((tntTons / 1000) ** (1/3))
 
             function v(z) {
                 return velocity * (Math.E ** ((-3 * rho(z) * 2 * 8000) / (4 * density * diameter * Math.sqrt(2) / 2)))
@@ -295,24 +305,24 @@
                 return Math.round(n * mult) / mult;
             }
 
+            var yI = 10 ** (2.107 + 0.0624 * Math.sqrt(density))
+            var iF = (4.07 * 2 * 8000 * yI) / (density * diameter * (velocity ** 2) * Math.sqrt(2) / 2) 
+            var zStar = -8000 * (Math.log(yI / (1 * velocity ** 2)) + 1.308 - (0.314 * iF) - (1.303 * Math.sqrt(1 - iF)))
+            var dispersionL = diameter * Math.sqrt(2) / 2 * Math.sqrt(density / (2 * rho(zStar)))
+            var zB = zStar - 16000 * Math.log(1 + (dispersionL / 16000) * Math.sqrt(48))
+            if (zB > 0) {
+                a = Math.sqrt(7 ** 2 - 1)
+                bigIntegral = (dispersionL * diameter ** 2 / 24) * a * (24 + 8 * a ** 2 + (6 * a * dispersionL / 8000) + (3 * a ** 3 * dispersionL / 8000))
+            } else {
+                bigIntegral = (8000 ** 3 * diameter ** 2 / (3 * dispersionL ** 2)) * (3 * (4 + (dispersionL / 8000) ** 2) * Math.E ** (zStar / 8000)
+                    + 6 * Math.E ** (2 * zStar / 8000) - 16 * Math.E ** (3 * zStar / 16000) - 3 * (dispersionL / 8000) ** 2 - 2)
+            }
+            var strikeVelocity = v(zStar) * Math.E ** (-0.75 * 2 * rho(zStar) / (density * diameter ** 3 * Math.sqrt(2) / 2) * bigIntegral)
+
             if (diameter > 1000) {
                 document.getElementById('atmosphericEntry').style.display = 'none';
             } else {
                 document.getElementById('atmosphericEntry').style.display = 'block';
-
-                yI = 10 ** (2.107 + 0.0624 * Math.sqrt(density))
-                iF = (4.07 * 2 * 8000 * yI) / (density * diameter * (velocity ** 2) * Math.sqrt(2) / 2) 
-                zStar = -8000 * (Math.log(yI / (1 * velocity ** 2)) + 1.308 - (0.314 * iF) - (1.303 * Math.sqrt(1 - iF)))
-                dispersionL = diameter * Math.sqrt(2) / 2 * Math.sqrt(density / (2 * rho(zStar)))
-                zB = zStar - 16000 * Math.log(1 + (dispersionL / 16000) * Math.sqrt(48))
-                if (zB > 0) {
-                    a = Math.sqrt(7 ** 2 - 1)
-                    bigIntegral = (dispersionL * diameter ** 2 / 24) * a * (24 + 8 * a ** 2 + (6 * a * dispersionL / 8000) + (3 * a ** 3 * dispersionL / 8000))
-                } else {
-                    bigIntegral = (8000 ** 3 * diameter ** 2 / (3 * dispersionL ** 2)) * (3 * (4 + (dispersionL / 8000) ** 2) * Math.E ** (zStar / 8000)
-                        + 6 * Math.E ** (2 * zStar / 8000) - 16 * Math.E ** (3 * zStar / 16000) - 3 * (dispersionL / 8000) ** 2 - 2)
-                }
-                strikeVelocity = v(zStar) * Math.E ** (-0.75 * 2 * rho(zStar) / (density * diameter ** 3 * Math.sqrt(2) / 2) * bigIntegral)
                 document.getElementById('breakupAltitude').innerHTML = sigFigs(zStar, 3)
                 if (zStar) {
                     if (zB > 0) {
@@ -329,27 +339,44 @@
 
             // Crater Dimensions
 
-            diameterTCrater = 1.161 * (density / targetDensity) ** (1/3) * diameter ** 0.78 * strikeVelocity ** 0.44 * 9.81 ** -0.22
+            var diameterTCrater = 1.161 * (density / targetDensity) ** (1/3) * diameter ** 0.78 * strikeVelocity ** 0.44 * 9.81 ** -0.22
                 * (Math.sqrt(2) / 2) ** (1/3)
             diameterTCrater /= 1000
-            depthTCrater = diameterTCrater / (2 * Math.sqrt(2))
-            diameterFCrater = 1.17 * (diameterTCrater) ** 1.13 / 3.2 ** 0.13
-            volumeBrecciaLens = 0.032 * diameterFCrater ** 3
-            hFCrater = 0.07 * diameterTCrater ** 4 / diameterFCrater ** 3
-            topBrecciaLens = 2.8 * volumeBrecciaLens * ((depthTCrater + hFCrater) / (depthTCrater * diameterFCrater ** 2))
-            depthFCrater = 0.294 * diameterFCrater ** 0.301 + 0.003
-            console.clear()
-            console.log(diameterTCrater)
-            console.log(depthTCrater)
-            console.log(diameterFCrater)
-            console.log(depthFCrater)
+            var depthTCrater = diameterTCrater / (2 * Math.sqrt(2))
+            var diameterFCrater = 1.17 * (diameterTCrater) ** 1.13 / 3.2 ** 0.13
+            var volumeBrecciaLens = 0.032 * diameterFCrater ** 3
+            var hFCrater = 0.07 * diameterTCrater ** 4 / diameterFCrater ** 3
+            var topBrecciaLens = 2.8 * volumeBrecciaLens * ((depthTCrater + hFCrater) / (depthTCrater * diameterFCrater ** 2))
+            var depthFCrater = 0.294 * diameterFCrater ** 0.301 + 0.003
 
-            zB1 = zB / (tntTons / 1000) ** (1/3)
-            rX = 290 / 1000
-            pX = 75000
-            r1 = (diameter + 70) / (tntTons / 1000) ** (1/3)
-            peakOverpressure = 75000 * rX / (4 * r1) * (1 + 3 * (rX / r1) ** (1.3))
-            console.log(peakOverpressure)
+            if ((zStar & zB > 0) | (diameterTCrater > 16100)) {
+                if (zStar & zB > 0) {
+                    document.getElementById('transientCrater').innerHTML = "No crater is formed, although large fragments may strike the surface."
+                } else {
+                    document.getElementById('transientCrater').innerHTML = "No crater is formed, the asteroid is too large."
+                }
+                document.getElementById('finalCrater').innerHTML = ''
+                console.log("YEAH")
+            } else {
+                a = 'The diameter of the transient crater is '
+                b = " and it's depth is "
+                c = ' The diameter of the final crater is '
+                d = " and it's depth is "
+                if (diameterTCrater > 1) {a += sigFigs(diameterTCrater, 3) + " km,"} else {a += sigFigs(diameterTCrater * 1000, 3) + " metres,"}
+                if (depthTCrater > 1) {b += sigFigs(depthTCrater, 3) + " km"} else {b += sigFigs(depthTCrater * 1000, 3) + " metres"}
+                if (diameterFCrater > 1) {c += sigFigs(diameterFCrater, 3) + " km,"} else {c += sigFigs(diameterFCrater * 1000, 3) + " metres,"}
+                if (depthFCrater > 1) {d += sigFigs(depthFCrater, 3) + " km"} else {d += sigFigs(depthFCrater * 1000, 3) + " metres"}
+                document.getElementById('transientCrater').innerHTML = a + b + '.'
+                if (diameterFCrater < 16100) {
+                    document.getElementById('finalCrater').innerHTML = c + d + '.'
+                } else {
+                    document.getElementById('finalCrater').innerHTML = ''
+                }
+            }
+            linearMomentumRatio = (4/3 * (diameter / 2) ** 3 * Math.PI * density) / (5.83 * 10 ** 24 * 29.78)
+            angularMomentumRatio = (4/3 * (diameter / 2) ** 3 * Math.PI * density * velocity * 6371000 * Math.sqrt(2) / 2) / (5.86 * 10 ** 33)
+            console.log(linearMomentumRatio)
+            console.log(angularMomentumRatio)
         }
     </script>
     <script>

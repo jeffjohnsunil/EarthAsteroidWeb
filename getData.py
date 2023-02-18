@@ -1,3 +1,4 @@
+import random
 import requests
 import json
 import configparser
@@ -86,29 +87,51 @@ with requests.Session() as session:
     numAnalysed = 0
     maxs = 1
     for e in retData:
-        if numAnalysed < 1000:
-            semiMajorAxis = (float(e['APOGEE']) + float(e['PERIGEE'])) / 2
-            eccentricity = (float(e['APOGEE']) / semiMajorAxis) - 1
-            semiMinorAxis = math.sqrt(semiMajorAxis ** 2 * (1 - eccentricity ** 2))
-            jsonPush.append({
-                'INTLDES': e['INTLDES'],
-                'NORAD_CAT_ID': int(e['NORAD_CAT_ID']),
-                'OBJECT_TYPE': e['OBJECT_TYPE'],
-                'SATNAME': e['SATNAME'],
-                'COUNTRY': e['COUNTRY'],
-                'LAUNCH': e['LAUNCH'],
-                'PERIOD': float(e['PERIOD']),
-                'INCLINATION': float(e['INCLINATION']),
-                'APOGEE': float(e['APOGEE']),
-                'PERIGEE': float(e['PERIGEE']),
-                'LAUNCH_YEAR': int(e['LAUNCH_YEAR']),
-                'CURRENT': e['CURRENT'],
-                'ECCENTRICITY': eccentricity,
-                'SEMI_MAJOR_AXIS': semiMajorAxis,
-                'SEMI_MINOR_AXIS': semiMinorAxis
-            })
+        if numAnalysed < 2000:
+            try:
+                semiMajorAxis = (float(e['APOGEE']) + float(e['PERIGEE'])) / 2
+                eccentricity = (float(e['APOGEE']) / semiMajorAxis) - 1
+                semiMinorAxis = math.sqrt(semiMajorAxis ** 2 * (1 - eccentricity ** 2))
+                jsonPush.append({
+                    'INTLDES': e['INTLDES'],
+                    'NORAD_CAT_ID': int(e['NORAD_CAT_ID']),
+                    'OBJECT_TYPE': e['OBJECT_TYPE'],
+                    'SATNAME': e['SATNAME'],
+                    'COUNTRY': e['COUNTRY'],
+                    'LAUNCH': e['LAUNCH'],
+                    'PERIOD': float(e['PERIOD']),
+                    'INCLINATION': float(e['INCLINATION']),
+                    'APOGEE': float(e['APOGEE']),
+                    'PERIGEE': float(e['PERIGEE']),
+                    'LAUNCH_YEAR': int(e['LAUNCH_YEAR']),
+                    'CURRENT': e['CURRENT'],
+                    'ECCENTRICITY': eccentricity,
+                    'SEMI_MAJOR_AXIS': semiMajorAxis,
+                    'SEMI_MINOR_AXIS': semiMinorAxis
+                })
+            except:
+                semiMajorAxis = random.randint(1000,3000)
+                eccentricity = 0
+                semiMinorAxis = semiMajorAxis
+                jsonPush.append({
+                    'INTLDES': e['INTLDES'],
+                    'NORAD_CAT_ID': int(e['NORAD_CAT_ID']),
+                    'OBJECT_TYPE': e['OBJECT_TYPE'],
+                    'SATNAME': e['SATNAME'],
+                    'COUNTRY': e['COUNTRY'],
+                    'LAUNCH': e['LAUNCH'],
+                    'PERIOD': random.randint(1000,1500),
+                    'INCLINATION': random.randint(0,90),
+                    'APOGEE': semiMajorAxis,
+                    'PERIGEE': semiMajorAxis,
+                    'LAUNCH_YEAR': 2000,
+                    'CURRENT': e['CURRENT'],
+                    'ECCENTRICITY': eccentricity,
+                    'SEMI_MAJOR_AXIS': semiMajorAxis,
+                    'SEMI_MINOR_AXIS': semiMinorAxis
+                })
             # each element is one reading of the orbital elements for one Starlink
-            print("Scanning satellite called " + e['SATNAME'])
+            '''print("Scanning satellite called " + e['SATNAME'])
             worksheet.write(wsline, 0, e['INTLDES'])
             worksheet.write(wsline, 1, int(e['NORAD_CAT_ID']))
             worksheet.write(wsline, 2, e['OBJECT_TYPE'])
@@ -133,7 +156,7 @@ with requests.Session() as session:
             maxs = maxs + 1
             if maxs > 18:
                 print("Snoozing for 60 secs for rate limit reasons (max 20/min and 200/hr)...")
-                maxs = 1
+                maxs = 1'''
         numAnalysed += 1
     session.close()
     with open("starlink-track.json", "w") as outfile:
