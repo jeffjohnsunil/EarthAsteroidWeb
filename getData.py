@@ -2,9 +2,6 @@ import random
 import requests
 import json
 import configparser
-import xlsxwriter
-import time
-from datetime import datetime
 import math
 
 class MyError(Exception):
@@ -38,31 +35,8 @@ configOut = config.get("configuration","output")
 siteCred = {'identity': configUsr, 'password': configPwd}
 
 # User xlsxwriter package to write the xlsx file (pip install xlsxwriter)
-workbook = xlsxwriter.Workbook(configOut)
-worksheet = workbook.add_worksheet()
-z0_format = workbook.add_format({'num_format': '#,##0'})
-z1_format = workbook.add_format({'num_format': '#,##0.0'})
-z2_format = workbook.add_format({'num_format': '#,##0.00'})
-z3_format = workbook.add_format({'num_format': '#,##0.000'})
 
 # write the headers on the spreadsheet
-now = datetime.now()
-nowStr = now.strftime("%m/%d/%Y %H:%M:%S")
-worksheet.write('A1','INTLDES')
-worksheet.write('B1','NORAD_CAT_ID')
-worksheet.write('C1','OBJECT_TYPE')
-worksheet.write('D1','SATNAME')
-worksheet.write('E1','COUNTRY')
-worksheet.write('F1','LAUNCH')
-worksheet.write('G1','PERIOD')
-worksheet.write('H1','INCLINATION')
-worksheet.write('I1','APOGEE')
-worksheet.write('J1','PERIGEE')
-worksheet.write('K1','LAUNCH_YEAR')
-worksheet.write('L1','CURRENT')
-worksheet.write('M1','ECCENTRICITY')
-worksheet.write('N1','SEMI_MAJOR_AXIS')
-worksheet.write('O1','SEMI_MINOR_AXIS')
 wsline = 1
 
 # use requests package to drive the RESTful session with space-track.org
@@ -86,8 +60,9 @@ with requests.Session() as session:
     satCount = len(retData)
     numAnalysed = 0
     maxs = 1
+    # save the data into a JSON file for later use
     for e in retData:
-        if numAnalysed < 2000:
+        if numAnalysed < 3000:
             try:
                 semiMajorAxis = (float(e['APOGEE']) + float(e['PERIGEE'])) / 2
                 eccentricity = (float(e['APOGEE']) / semiMajorAxis) - 1
@@ -130,36 +105,8 @@ with requests.Session() as session:
                     'SEMI_MAJOR_AXIS': semiMajorAxis,
                     'SEMI_MINOR_AXIS': semiMinorAxis
                 })
-            # each element is one reading of the orbital elements for one Starlink
-            '''print("Scanning satellite called " + e['SATNAME'])
-            worksheet.write(wsline, 0, e['INTLDES'])
-            worksheet.write(wsline, 1, int(e['NORAD_CAT_ID']))
-            worksheet.write(wsline, 2, e['OBJECT_TYPE'])
-            worksheet.write(wsline, 3, e['SATNAME'])
-            worksheet.write(wsline, 4, e['COUNTRY'])
-            worksheet.write(wsline, 5, e['LAUNCH'])
-            worksheet.write(wsline, 6, float(e['PERIOD']))
-            worksheet.write(wsline, 7, float(e['INCLINATION']))
-            worksheet.write(wsline, 8, float(e['APOGEE']))
-            worksheet.write(wsline, 9, float(e['PERIGEE']))
-            worksheet.write(wsline, 10, int(e['LAUNCH_YEAR']))
-            worksheet.write(wsline, 11, e['CURRENT'])
-
-            semiMajorAxis = (float(e['APOGEE']) + float(e['PERIGEE'])) / 2
-            eccentricity = (float(e['APOGEE']) / semiMajorAxis) - 1
-            semiMinorAxis = math.sqrt(semiMajorAxis ** 2 * (1 - eccentricity ** 2))
-
-            worksheet.write(wsline, 12, eccentricity)
-            worksheet.write(wsline, 13, semiMajorAxis)
-            worksheet.write(wsline, 14, semiMinorAxis)
-            wsline = wsline + 1
-            maxs = maxs + 1
-            if maxs > 18:
-                print("Snoozing for 60 secs for rate limit reasons (max 20/min and 200/hr)...")
-                maxs = 1'''
         numAnalysed += 1
     session.close()
     with open("starlink-track.json", "w") as outfile:
         json.dump(jsonPush, outfile)
-workbook.close()
 print("Completed session") 
