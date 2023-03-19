@@ -58,11 +58,12 @@ with requests.Session() as session:
     retData = json.loads(resp.text)
     jsonPush = []
     satCount = len(retData)
+    limit = int(input("Enter number of asteroids needed > "))
     numAnalysed = 0
     maxs = 1
     # save the data into a JSON file for later use
     for e in retData:
-        if numAnalysed < 3000:
+        if numAnalysed < limit:
             try:
                 semiMajorAxis = (float(e['APOGEE']) + float(e['PERIGEE'])) / 2
                 eccentricity = (float(e['APOGEE']) / semiMajorAxis) - 1
