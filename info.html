@@ -25,8 +25,13 @@
           <script src=
         "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
     <style>
+        @font-face {
+            font-family: "aquireLight";
+            src: url("nasa21-font/Nasa21-l23X.ttf");
+        }
+
         body {
-            font-family: "Verdana";
+            font-family: "aquireLight";
         }
 
         .tag {
@@ -171,6 +176,15 @@
             z-index: 10;
             background-color: #2196F3;
             color: #fff;
+        }
+
+        @media (max-width: 800px) {
+            #controlsInfo {
+                visibility: hidden;
+            }
+            #controlsInfoHeader {
+                visibility: hidden;
+            }
         }
     </style></head>
     <body class="text-center">
