@@ -180,9 +180,13 @@
 
         @media (max-width: 800px) {
             #controlsInfo {
-                visibility: hidden;
+                position: relative;
+                visibility: visible;
+                width: 100%;
             }
             #controlsInfoHeader {
+                padding: 0px;
+                cursor: none;
                 visibility: hidden;
             }
         }
@@ -292,7 +296,6 @@
             </div>
             <div class='alertTrigger'></div>
         </div>
-        <div id="container"></div>
         <div id="controlsInfo">
             <div id="controlsInfoHeader">Click here to move</div>
             <p>This is a simulation to help you visualize how many asteroids there are. Blue objects represent parts of rocket bodies.
@@ -300,6 +303,7 @@
                 others. Check the box if you want to trigger viweing orbits.</p>
             <input type="checkbox" id="orbitCheck"> View orbits
         </div>
+        <div id="container"></div>
         <script src="js/three.js"></script>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.1/dist/Chart.min.js"></script>
