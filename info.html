@@ -258,7 +258,7 @@
                         <li><b>Semi-major axis:</b> The length of the longest radius of an ellipse, that is the greatest 
                             distance between the centre of the ellipse and the perimeter of the ellipse.</li>
                         <li><b>Astronomical Unit (au):</b> A unit of length, roughly the distance from Earth to the Sun and 
-                            equal to about 150 million kilometres</li>
+                            equal to about 150 million kilometers</li>
                     </ul>
                 </div>
             </div>
@@ -324,7 +324,7 @@
             <div id="controlsInfoHeader">Click here to move</div>
             <p>This is a simulation to help you visualize how many asteroids there are. Blue objects represent parts of rocket bodies.
                 Yellow objects represent payload (waste ejected from rockets). Grey objects represent general debris and green ones represent
-                others. Check the box if you want to trigger viweing orbits.</p>
+                others. Check the box if you want to trigger viewing orbits.</p>
             <input type="checkbox" id="orbitCheck"> View orbits
         </div>
         <div style="position: relative">
@@ -347,7 +347,7 @@
             var pageTop = $(document).scrollTop();
             var pageBottom = pageTop + $(window).height();
             var tags = $(".tag");
-            var alertTriggerers = $(".alertTrigger")
+            var alertTriggers = $(".alertTrigger")
 
             for (var i = 0; i < tags.length; i++) {
                 var tag = tags[i];
@@ -359,8 +359,8 @@
                 }
             }
 
-            for (var i = 0; i < alertTriggerers.length; i++) {
-                var alertTrigger = alertTriggerers[i];
+            for (var i = 0; i < alertTriggers.length; i++) {
+                var alertTrigger = alertTriggers[i];
 
                 if ($(alertTrigger).position().top < pageBottom & alertTriggerActive) {
                     alert('Click each asteroid to learn more.');
