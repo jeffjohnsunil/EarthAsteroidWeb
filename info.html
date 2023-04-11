@@ -562,7 +562,7 @@
 
                     const asteroidPos = new THREE.Vector2 (points[Math.round(currentPeriod * 1000)].x, points[Math.round(currentPeriod * 1000)].y)
 
-                    const geometryP = new THREE.SphereGeometry (3, 10, 100);
+                    const geometryP = new THREE.SphereGeometry (1.5, 10, 100);
                     const materialP = new THREE.MeshBasicMaterial( { color: colorP } );     
                     const meshP = new THREE.Mesh(geometryP, materialP);
                     meshP.position.set ( asteroidPos.width, asteroidPos.height, 0 );
