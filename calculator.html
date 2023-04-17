@@ -254,12 +254,20 @@
         }
 
         function impactCalculator() {
-            document.getElementById("loader").style.display = "block";
-            document.getElementById("content").style.display = "none";
-            myVar = setTimeout(showPage, 3000);
-
             const form = document.getElementById('impactCalculatorForm');
             var diameter = form.elements[0].value
+            var density = form.elements[3].value
+            var velocity = form.elements[5].value
+            if (diameter == '' || density == '' || velocity == '') {
+                alert('No empty fields are allowed')
+                document.getElementById('results').style.display = 'none';
+            } else {
+                document.getElementById("loader").style.display = "block";
+                document.getElementById("content").style.display = "none";
+                document.getElementById('results').style.display = 'block';
+                myVar = setTimeout(showPage, 3000);
+            }
+
             diameterUnits = form.elements[1].value
             switch(diameterUnits) {
                 case 'kilometers':
@@ -271,9 +279,7 @@
                 case 'meters':
                     break;
             }
-            document.getElementById('results').style.display = 'block';
-            var density = form.elements[3].value
-            var velocity = form.elements[5].value
+
             var targetDensity = 3000
             velocity *= 1000
 
